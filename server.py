@@ -1,10 +1,11 @@
 
 from flask import Flask, request, send_file, jsonify
+from flask_cors import CORS
 from PIL import Image, ImageDraw, ImageFont
 import tempfile, shutil, os, zipfile
 
 app = Flask(__name__)
-
+CORS(app)
 @app.route("/api/add_watermarks", methods=["POST"])
 def add_watermarks():
     temp_dir = tempfile.mkdtemp()
