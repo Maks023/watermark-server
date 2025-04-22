@@ -63,9 +63,11 @@ def add_watermarks():
 @app.route("/download/<filename>")
 def download_file(filename):
     path = os.path.join(tempfile.gettempdir(), filename)
-    response = send_file(path, as_attachment=True)
-    os.remove(path)
-    return response
+    if not os.path.exists(path):
+        return "Файл не найден", 404
+
+    # НЕ УДАЛЯЕМ СРАЗУ — пусть скачает
+    return send_file(path, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)
